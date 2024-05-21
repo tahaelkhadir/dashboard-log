@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Analysis Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Log Analysis</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Elements</a></li>
+            <li><a href="#">Widgets</a></li>
+            <li><a href="#">Forms</a></li>
+            <li><a href="#">Tables</a></li>
+            <li><a href="#">Charts</a></li>
+            <li><a href="#">Pages</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="header">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="summary">
+            <div class="card">
+                <h2>Unique Visitors</h2>
+                <p>{{ unique_visitors }}</p>
+            </div>
+            <div class="card">
+                <h2>Total Requests</h2>
+                <p>{{ total_requests }}</p>
+            </div>
+        </div>
+        <div class="charts">
+            <h2>Graphs</h2>
+            <img src="{{ url_for('static', filename='graphs.png') }}" alt="Graphs">
+        </div>
+        <div class="details">
+            <div class="card">
+                <h2>Top URLs</h2>
+                <ul>
+                    {% for url, count in top_urls %}
+                    <li>{{ url }} - {{ count }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card">
+                <h2>Not Found URLs</h2>
+                <ul>
+                    {% for url in not_found_urls %}
+                    <li>{{ url }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="ip-browser-geo">
+            <h2>IP, Browser, and Geolocation</h2>
+            <table>
+                <tr>
+                    <th>IP Address</th>
+                    <th>Browser</th>
+                    <th>Geolocation</th>
+                </tr>
+                {% for ip, browser, geo in ip_browser_geo %}
+                <tr>
+                    <td>{{ ip }}</td>
+                    <td>{{ browser }}</td>
+                    <td>{{ geo }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="map">
+            <h2>Geolocation Map</h2>
+            {% include "map.html" %}
+        </div>
+    </div>
+</body>
+</html>
